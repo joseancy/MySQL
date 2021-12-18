@@ -1,36 +1,41 @@
 CREATE DATABASE test_db;
 
-CREATE TABLE IF NOT EXISTS `loginForm` (
+CREATE TABLE IF NOT EXISTS `users` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `username` varchar(50) NOT NULL,
  `email` varchar(50) NOT NULL,
  `password` varchar(50) NOT NULL,
- `date` datetime NOT NULL,
+ `create_datetime` datetime NOT NULL,
  PRIMARY KEY (`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `agents`( 
+	`id` int NOT NULL AUTO_INCREMENT, 
+	`name` VARCHAR(100) NOT NULL, 
+	`email` VARCHAR(100) NOT NULL, 
+  	`password` varchar(50) NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `employees`( 
+	`id` int NOT NULL AUTO_INCREMENT, 
+	`name` VARCHAR(100) NOT NULL, 
+	`email` VARCHAR(100) NOT NULL, 
+  	`password` varchar(50) NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
 
 CREATE TABLE IF NOT EXISTS `complaint_form` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
- `comment_id` int(11) NOT NULL,
- `name` varchar(50) NOT NULL,
- `email` varchar(50) NOT NULL,
- `comment_text` varchar(2000) NOT NULL,
- `date` date NOT NULL,
- `time` time NOT NULL,
- `timestamp` varchar(15) NOT NULL,
- PRIMARY KEY (`id`)
-);
-
-CREATE TABLE IF NOT EXISTS `status` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `complaint_id` int(11) NOT NULL,
- `completed` varchar(50) NOT NULL,
- `inprogress` varchar(50) NOT NULL,
- `stuck` varchar(50) NOT NULL,
- `date` date NOT NULL,
- `time` time NOT NULL,
- `timestamp` varchar(15) NOT NULL,
+ `user_id` int(11) NOT NULL,
+ `agent_id` INT, 
+ `employee_id` INT,  
+ `comment_text` text NOT NULL,
+ `status` VARCHAR(20) NOT NULL,
+ `date` date NOT NULL DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY (`id`),
- FOREIGN KEY (complaint_id) REFERENCES complaint_form(id)
+ FOREIGN KEY(user_id) REFERENCES users(id),
+ FOREIGN KEY(agent_id) REFERENCES agents(id),
+ FOREIGN KEY(employee_id) REFERENCES employees(id)
 );
- 
